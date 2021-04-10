@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import SignUp from "./src/signUp/SignUp";
+import SignIn from "./src/signIn/SignIn";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Back4App React Native Relay - SignUp Flow</Text>
-      <SignUp />
+      <Text>Back4App React Native Relay - SignIn Flow</Text>
+      <SignIn />
     </View>
   );
 }
