@@ -9,7 +9,7 @@ import LogInMutation from "./mutations/LogInMutation";
 const TextInput = styled.TextInput``;
 
 const SignIn = () => {
-  const [userLogged, setUserLogged] = useState({});
+  const [sessionToken, setSessionToken] = useState(null);
 
   const onSubmit = (values) => {
     const { username, password } = values;
@@ -22,7 +22,7 @@ const SignIn = () => {
     LogInMutation.commit({
       environment,
       input,
-      onCompleted: (response) => {
+      onCompleted: async (response) => {
         if (!response?.logIn || response?.logIn === null) {
           alert("Error while logging");
           return;
@@ -32,8 +32,8 @@ const SignIn = () => {
         const { sessionToken, user } = viewer;
 
         if (sessionToken !== null) {
-          setUserLogged(user);
-          alert(`user ${user.username} successfully logged`);
+          setSessionToken(sessionToken);
+          await AsyncStorage.setItem("sessionToken", sessionToken);
           return;
         }
       },
@@ -53,10 +53,10 @@ const SignIn = () => {
 
   const { handleSubmit, setFieldValue } = formikbag;
 
-  if (userLogged?.id) {
+  if (sessionToken) {
     return (
-      <View style={{ marginTop: 15, alignItems: "center" }}>
-        <Text>User {userLogged.name} logged</Text>
+      <View>
+        <Text>User logged</Text>
       </View>
     );
   }
