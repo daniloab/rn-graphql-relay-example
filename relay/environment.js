@@ -1,5 +1,22 @@
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
+export const getSessionToken = async () => {
+  const sessionToken = await AsyncStorage.getItem("sessionToken");
+  return sessionToken;
+};
+
+export const getToken = async () => {
+  const sessionToken = await getSessionToken();
+
+  if (sessionToken) {
+    return {
+      "X-Parse-Session-Token": sessionToken,
+    };
+  }
+
+  return {};
+};
+
 const fetchQuery = async (request, variables) => {
   const body = JSON.stringify({
     query: request.text,
@@ -9,8 +26,9 @@ const fetchQuery = async (request, variables) => {
   const headers = {
     Accept: "application/json",
     "Content-type": "application/json",
-    "X-Parse-Application-Id": "X-Parse-Application-Id",
-    "X-Parse-Client-Key": "X-Parse-Client-Key",
+    "X-Parse-Application-Id": "dJOGKGnEokwvCKb2hYcsDmLbftXpmrGuqQbFHUZf",
+    "X-Parse-Client-Key": "z0pNVd9qRekCIQvrFcT5vyc33DDVsh7VRCEiXPm0",
+    ...(await getToken()),
   };
 
   try {

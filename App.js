@@ -5,7 +5,7 @@ import SignIn from "./src/signIn/SignIn";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Back4App React Native Relay - SignIn Flow</Text>
+      <Text>Back4App Reacta Native Relay - SignIn Flow</Text>
       <SignIn />
     </View>
   );
