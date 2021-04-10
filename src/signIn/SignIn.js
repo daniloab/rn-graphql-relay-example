@@ -5,6 +5,8 @@ import { Button, Text, View } from "react-native";
 
 import styled from "styled-components";
 import LogInMutation from "./mutations/LogInMutation";
+import UserLoggedRenderer from "./UserLoggedRenderer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TextInput = styled.TextInput``;
 
@@ -54,11 +56,7 @@ const SignIn = () => {
   const { handleSubmit, setFieldValue } = formikbag;
 
   if (sessionToken) {
-    return (
-      <View>
-        <Text>User logged</Text>
-      </View>
-    );
+    return <UserLoggedRenderer />;
   }
 
   return (
