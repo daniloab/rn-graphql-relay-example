@@ -7,11 +7,27 @@ import styled from "styled-components";
 import LogInMutation from "./mutations/LogInMutation";
 import UserLoggedRenderer from "./UserLoggedRenderer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LogOutMutation from "./mutations/LogOutMutation";
 
 const TextInput = styled.TextInput``;
 
 const SignIn = () => {
   const [sessionToken, setSessionToken] = useState(null);
+
+  const handleLogout = async () => {
+    LogOutMutation.commit({
+      environment,
+      input: {},
+      onCompleted: async () => {
+        await AsyncStorage.removeItem("sessionToken");
+        setSessionToken(null);
+        alert("User successfully logged out");
+      },
+      onError: (errors) => {
+        alert(errors[0].message);
+      },
+    });
+  };
 
   const onSubmit = (values) => {
     const { username, password } = values;
@@ -56,7 +72,12 @@ const SignIn = () => {
   const { handleSubmit, setFieldValue } = formikbag;
 
   if (sessionToken) {
-    return <UserLoggedRenderer />;
+    return (
+      <>
+        <UserLoggedRenderer />
+        <Button title={"logout"} onPress={() => handleLogout()} />
+      </>
+    );
   }
 
   return (
