@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { View, Button, Text } from "react-native";
+import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { useFormik, FormikProvider } from "formik";
-import styled from "styled-components";
 import SignUpMutation from "./mutations/SignUpMutation";
 import environment from "../../relay/environment";
-
-const TextInput = styled.TextInput``;
+import Styles from "../../Style";
 
 const SignUp = () => {
-  const [userCreated, setUserCreated] = useState({});
+  const [userCreated, setUserCreated] = useState(null);
 
   const onSubmit = (values) => {
     const { username, password } = values;
@@ -58,34 +56,29 @@ const SignUp = () => {
 
   return (
     <FormikProvider value={formikbag}>
-      <View style={{ marginTop: 15, alignItems: "center" }}>
-        <Text>Username</Text>
-        <TextInput
-          name={"username"}
-          style={{
-            width: 150,
-            height: 30,
-            borderColor: "gray",
-            borderWidth: 1,
-          }}
-          autoCapitalize="none"
-          onChangeText={(text) => setFieldValue("username", text)}
-        />
-
-        <Text style={{ marginTop: 15 }}>Password</Text>
-        <TextInput
-          style={{
-            width: 150,
-            height: 30,
-            borderColor: "gray",
-            borderWidth: 1,
-          }}
-          name={"password"}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          onChangeText={(text) => setFieldValue("password", text)}
-        />
-        <Button title={"sign up"} onPress={() => handleSubmit()} />
+      <View style={Styles.login_wrapper}>
+        <View style={Styles.form}>
+          <Text>Username</Text>
+          <TextInput
+            name={"username"}
+            style={Styles.form_input}
+            autoCapitalize="none"
+            onChangeText={(text) => setFieldValue("username", text)}
+          />
+          <Text style={{ marginTop: 15 }}>Password</Text>
+          <TextInput
+            style={Styles.form_input}
+            name={"password"}
+            autoCapitalize="none"
+            secureTextEntry
+            onChangeText={(text) => setFieldValue("password", text)}
+          />
+          <TouchableOpacity onPress={() => handleSubmit()}>
+            <View style={Styles.button}>
+              <Text style={Styles.button_label}>{"Sign Up"}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </FormikProvider>
   );
