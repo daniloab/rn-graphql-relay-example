@@ -6,7 +6,7 @@ import { Text, View } from "react-native";
 const UserLoggedRenderer = () => {
   const renderContent = (viewer) => {
     if (!viewer?.user) {
-      return null;
+      return <Text>User logged</Text>;
     }
 
     const { user } = viewer;

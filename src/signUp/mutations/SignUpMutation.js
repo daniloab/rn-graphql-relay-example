@@ -6,6 +6,7 @@ const mutation = graphql`
       viewer {
         user {
           id
+          username
           createdAt
         }
         sessionToken

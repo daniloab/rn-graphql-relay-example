@@ -41,6 +41,11 @@ const fetchQuery = async (request, variables) => {
 
     const data = await response.json();
 
+    if (response.status === 401) {
+      await AsyncStorage.getItem("sessionToken");
+      return;
+    }
+
     if (data.errors) {
       throw data.errors;
     }
